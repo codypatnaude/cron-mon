@@ -11,14 +11,24 @@ class Base {
     }
 
     public function beforeroute(){
-        echo "BEFORE ROUTE<br/>";
+
+        $authModel = new \Model\Auth();
+        $f3 = \Base::instance();
+        $app_key = $f3->get('GET.app_key');
+        $app_id = $f3->get('GET.app_id');
+        var_dump($app_key);
+
+        $authModel->VerifyCredentials($app_key, $app_id);
+
+        $userModel = new \Model\Base('users');
+        $userModel->getById(1);
+
+        echo $userModel->username."\nORG: " . $f3->get('ORG_NAME') . "\n";
     }
 
-    public function get(){
-        echo "GET<br/>";
-    }
 
     public function afterroute(){
-        echo "AFTER ROUTE<br/>";
+        $data = $this->f3->get('data');
+        echo json_encode($data);
     }
 }

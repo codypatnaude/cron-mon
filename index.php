@@ -11,4 +11,10 @@ if ((float)PCRE_VERSION<7.9)
 $f3->config('config.ini');
 $f3->config('routes.ini');
 
+$datasource = $f3->get('datasource');
+
+$db=new \DB\SQL('mysql:host='.$datasource['HOST'].';port='.$datasource['PORT'].';dbname='.$datasource['DATABASE'],$datasource['USER'],$datasource['PASS']);
+
+$f3->set('db_connection', $db);
+
 $f3->run();
